@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/search" method="post">
+    {% csrf_token %}
+    <span>{{ form.user }}</span><br>
+    {% if error.user.0 %}
+        <span>{{ error.user.0 }}</span><br>
+    {% endif %}
+    <span>{{ form.pwd }}</span><br>
+    {% if error.pwd.0 %}
+        <span>{{ error.pwd.0 }}</span><br>
+    {% endif %}
+    <input type="submit" value="提交">
+</form>
+
+{{ content.user }}
+{{ content.pwd }}
+</body>
+</html>

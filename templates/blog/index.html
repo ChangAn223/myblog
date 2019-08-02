@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block title %}博客首页 {% endblock %}
+
+{% block this_index %} layui-this{% endblock %}
+
+{% block article %}
+    <div class="layui-col-xs12 layui-col-sm9 layui-col-md9 lbox">
+        <!--lunbo-->
+        <div>
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+                <div class="layui-carousel" id="lunbo">
+                    <div carousel-item="">
+                        <div><img src="/static/images/wz.jpg" alt="图片"></div>
+                        <div><img src="/static/images/dqcx.jpg" alt="图片"></div>
+                        <div><img src="/static/images/xt.jpg" alt="图片"></div>
+                    </div>
+                </div>
+            </div>
+            <!--lunbor-->
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 lunbor">
+                <ul>
+                    <li>
+                        <a href="" title=""><img src="/static/images/qt.jpg" alt="怀念青春">
+                            <span>  固定文章推荐111111 </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" title=""><img src="/static/images/dt.jpg" alt="">
+                            <span> 固定文章推荐222222  </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--tab选项卡-->
+        <div class="layui-col-xs12 layui-col-sm12 tab_box whitebg">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">PYTHON</li>
+                    <li>Linux</li>
+                    <li>数据结构与算法</li>
+                    <li>数据库</li>
+                    <li>计算机网络</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <!--选项卡1内容-->
+                        <div class="newsitem">
+                            <div class="newspic">
+                                <ul>
+                                    <li>
+                                        <a href=""><img src="/static/images/ct.jpg" alt="图片">
+                                            <span>这里是两篇固定的python相关的文章1</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href=""><img src="/static/images/xt1.jpg" alt="图片">
+                                            <span>这里是两篇固定的python相关的文章2</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="newslist">
+                                {% for article in python %}
+                                    <li><i></i>
+                                        <a href="{{ article.get_article_url }}">{{ article.title }}</a>
+                                        <p>{{ article.content |  truncatechars:100 }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <!--选项卡2内容-->
+                        <div class="newsitem">
+                            <div class="newspic">
+                                <ul>
+                                    <li>
+                                        <a href=""><img src="/static/images/ct.jpg" alt="图片">
+                                            <span>这里是两篇固定的Linux相关的文章1</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href=""><img src="/static/images/xt1.jpg" alt="图片">
+                                            <span>这里是两篇固定的Linux相关的文章2</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="newslist">
+                                {% for article in linux %}
+                                    <li><i></i>
+                                        <a href="{{ article.get_article_url }}">{{ article.title }}</a>
+                                        <p>{{ article.content |  truncatechars:100 }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <!--选项卡3内容-->
+                        <div class="newsitem">
+                            <div class="newspic">
+                                <ul>
+                                    <li>
+                                        <a href=""><img src="/static/images/ct.jpg" alt="图片">
+                                            <span>这里是两篇固定的数据结构与算法相关的文章1</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href=""><img src="/static/images/xt1.jpg" alt="图片">
+                                            <span>这里是两篇固定的数据结构与算法相关的文章2</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="newslist">
+                                {% for article in suanfa %}
+                                    <li><i></i>
+                                        <a href="{{ article.get_article_url }}">{{ article.title }}</a>
+                                        <p>{{ article.content |  truncatechars:100 }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <!--选项卡4内容-->
+                        <div class="newsitem">
+                            <div class="newspic">
+                                <ul>
+                                    <li>
+                                        <a href=""><img src="/static/images/ct.jpg" alt="图片">
+                                            <span>这里是两篇固定的数据库相关的文章1</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href=""><img src="/static/images/xt1.jpg" alt="图片">
+                                            <span>这里是两篇固定的数据库相关的文章2</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="newslist">
+                                {% for article in database %}
+                                    <li><i></i>
+                                        <a href="{{ article.get_article_url }}">{{ article.title }}</a>
+                                        <p>{{ article.content |  truncatechars:100 }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <!--选项卡5内容-->
+                        <div class="newsitem">
+                            <div class="newspic">
+                                <ul>
+                                    <li>
+                                        <a href=""><img src="/static/images/ct.jpg" alt="图片">
+                                            <span>这里是两篇固定的计算机网络相关的文章1</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href=""><img src="/static/images/xt1.jpg" alt="图片">
+                                            <span>这里是两篇固定的计算机网络相关的文章2</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="newslist">
+                                {% for article in net %}
+                                    <li><i></i>
+                                        <a href="{{ article.get_article_url }}">{{ article.title }}</a>
+                                        <p>{{ article.content |  truncatechars:100 }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--tab选项卡end-->
+        <!--newslist-->
+        <div class="layui-col-xs12 whitebg bloglist">
+            <h2 class="htitle">最新博文</h2>
+            <ul>
+                {% for article in articles %}
+                    <li>
+                        <h3 class="blogtitle"><span>&nbsp;&nbsp;</span>
+                            <a href="{{ article.get_article_url }}" target="_blank">{{ article.title }}</a></h3>
+                        <span class="blogpic imgscale">
+                            {% if article.category %}
+                                <i><a href="#" target="_blank">{{ article.category }}</a></i>
+                            {% endif %}
+                            <a href="{{ article.get_article_url }}" title="{{ article.title }}">
+                            <img src="/static/images/jn.png" alt="{{ article.title }}"></a>
+                        </span>
+                        <p class="blogtext">{{ article.content |  truncatechars:140 }}</p>
+                        <p class="bloginfo">
+                            <i class="avatar">
+                                <a href="{{ article.get_article_url }}" target="_blank">
+                                    <img src="/static/images/avatar.jpg" alt="图片"></a>
+                            </i>
+                            <span>{{ article.author }}</span><span>{{ article.create_time }}</span>
+                            <span>{{ article.read }} 浏览</span>
+                            {% if article.category %}
+                                <span>【<a href="http://jxhx.yangqq.com/notice/"
+                                          target="_blank">{{ article.category }}</a>】</span>
+                            {% endif %}
+                        </p>
+                        <a href="{{ article.get_article_url }}" class="viewmore">阅读更多</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

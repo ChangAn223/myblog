@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %} 零壹天地 {% endblock %}
+
+{% block this_article %}layui-this{% endblock %}
+
+{% block article %}
+    <div class="layui-col-xs12 layui-col-sm9 layui-col-md9 lbox">
+        {% if not category_id %}
+            <div class="whitebg cloud">
+                <h2 class="htitle">文章分类</h2>
+                <ul>
+                    <a href="/category/1" target="_blank">&emsp;Python&emsp;</a>
+                    <a href="/category/5" target="_blank">&emsp;Linux&emsp;</a>
+                    <a href="/category/8" target="_blank">&emsp;数据库&emsp;</a>
+                    <a href="/category/9" target="_blank">&emsp;数据结构与算法&emsp;</a>
+                    <a href="/category/4" target="_blank">&emsp;计算机网络&emsp;</a>
+                </ul>
+            </div>
+        {% else %}
+            <div class="whitebg lanmu"><img src="/static/images/xwzj.jpg">
+                <h1>代码的故事</h1>
+                <p>
+                    Python，Linux，数据库，数据结构与算法，我与代码的爱恨情仇。
+                </p>
+            </div>
+        {% endif %}
+        <!--newslist-->
+        <div class="layui-col-xs12 whitebg bloglist">
+            <h2 class="htitle">最新博文</h2>
+            <ul>
+                {% for article in articles %}
+                    <li>
+                        <h3 class="blogtitle"><span>&nbsp;&nbsp;</span>
+                            <a href="{{ article.get_article_url }}" target="_blank">{{ article.title }}</a></h3>
+                        <span class="blogpic imgscale">
+                            {% if article.category %}
+                                <i><a href="#" target="_blank">{{ article.category }}</a></i>
+                            {% endif %}
+                            <a href="{{ article.get_article_url }}" title="{{ article.title }}">
+                            <img src="/static/images/jn.png" alt="{{ article.title }}"></a>
+                        </span>
+                        <p class="blogtext">{{ article.content |  truncatechars:140 }}</p>
+                        <p class="bloginfo">
+                            <i class="avatar">
+                                <a href="{{ article.get_article_url }}" target="_blank">
+                                    <img src="/static/images/avatar.jpg" alt="图片"></a>
+                            </i>
+                            <span>{{ article.author }}</span><span>{{ article.create_time }}</span>
+                            <span>{{ article.read }} 浏览</span>
+                            {% if article.category %}
+                                <span>【<a href="http://jxhx.yangqq.com/notice/"
+                                          target="_blank">{{ article.category }}</a>】</span>
+                            {% endif %}
+                        </p>
+                        <a href="{{ article.get_article_url }}" class="viewmore">阅读更多</a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+            <!--pagelist-->
+            <div class="pagelist">
+                <a title="Total record">&nbsp;<b>首页</b> </a>
+                <b>1</b>&nbsp;
+                <a href="">2</a>&nbsp;
+                <a href="">下一页</a>&nbsp;
+                <a href="">尾页</a>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

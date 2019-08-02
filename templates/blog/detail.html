@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block meta %}
+    <meta name="keywords" content="{{ article.category }}">
+    <meta name="description" content="{{ article.title }}">
+{% endblock %}
+
+{% block other %}
+    <link rel="stylesheet" href="/static/css/detail.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/code.css">  {#语法高亮#}
+{% endblock %}
+
+{% block this_article %}layui-this{% endblock %}
+
+{% block article %}
+    <div class="layui-col-xs12 layui-col-sm12 layui-col-md9">
+        <div class="whitebg">
+            <h2 class="htitle">
+						<span class="con_nav">您现在的位置是：
+							<span class="layui-breadcrumb" lay-separator=">">
+							  <a href="">首页</a> >
+							  <a href="">博客文章</a>
+							</span>
+						</span>
+                {{ article.category }}
+            </h2>
+            <h1 class="con_tilte">{{ article.title }}</h1>
+            <p class="bloginfo"><i class="avatar"><img src="/static/images/avatar.jpg"></i>
+                <span></span><span>{{ article.create_time }}</span>
+                {% if article.category %}
+                    <span>【{{ article.category }}】</span>
+                {% endif %}
+                <span>{{ article.read }}人已围观</span></p>
+            <hr>
+            <div class="con_text">
+                {% autoescape off %}
+                    {{ article.content | safe }}
+                {% endautoescape %}
+                <p>Tags：</p>
+                <blockquote class="layui-elem-quote">
+                    <b>转载：</b>感谢您对个人博客网站平台的认可，以及对我的原创作品以及文章的青睐，非常欢迎各位朋友分享到个人站长或者朋友圈，但转载请说明文章出处“来源个人博客”。
+                    <br>
+                </blockquote>
+                <p><a href="javascript:;" style="text-decoration: none" onclick="like_article({{ article.id }})"><span
+                        class="diggit"><i class="layui-icon layui-icon-praise"> </i> (<i
+                        id="diggnum">{{ article.like_count }}</i>)</span></a></p>
+                <div class="nextinfo">
+{#                    <p>上一篇：#}
+{#                        <a href="">按钮在线生成工具Button Maker</a>#}
+{#                    </p>#}
+{#                    <p>下一篇：#}
+{#                        <a href="">返回列表</a>#}
+{#                    </p>#}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="whitebg">
+            <h2 class="htitle">相关文章</h2>
+            <ul class="otherlink">
+{#                <li>#}
+{#                    <a href="" title="Color Scheme Designer 取色" target="_blank">#}
+{#                        Color Scheme Designer 取色#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="" title="Color Scheme Designer 取色" target="_blank">#}
+{#                        Color Scheme Designer 取色#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="" title="Color Scheme Designer 取色" target="_blank">#}
+{#                        Color Scheme Designer 取色#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="" title="Color Scheme Designer 取色" target="_blank">#}
+{#                        Color Scheme Designer 取色#}
+{#                    </a>#}
+{#                </li>#}
+            </ul>
+        </div>
+
+        <div class="whitebg gbook">
+            <h2 class="htitle">文章评论</h2>
+            <ul>
+                <form action="/comment/blog/{{ article.id }}" method="post" name="saypl" id="saypl">
+                    {% csrf_token %}
+                    <div id="plpost">
+                        <p class="saying"><span><i>共有{{ article.comment_count }}条评论</i></span>来说两句吧...
+                        </p>
+                        <p class="yname">
+                            <span>昵 称：</span>
+                            <input name="nickname" type="text" class="inputText" id="nickname" value="" size="16"/>
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span>邮 箱：</span>
+                            <input name="email" type="text" class="inputText" id="email" value="" size="16"/>
+                        </p>
+{#                        <p class="yzm"><span>验证码:</span>#}
+{#                            <input name="key" type="text" class="inputText" size="16"/>#}
+{#                            <img src="../../e/ShowKey/-v=pl.jpg" align="absmiddle" name="plKeyImg" id="plKeyImg"#}
+{#                                 title="看不清楚,点击刷新"/></p>#}
+{#                        <input name="nomember" type="hidden" id="nomember" value="1" checked="checked"/>#}
+                        <textarea name="content" rows="6" id="saytext"></textarea>
+                        <input name="imageField" type="submit" value="提交"/>
+{#                        <input name="id" type="hidden" id="id" value="12"/>#}
+{#                        <input name="classid" type="hidden" id="classid" value="3"/>#}
+{#                        <input name="enews" type="hidden" id="enews" value="AddPl"/>#}
+{#                        <input name="repid" type="hidden" id="repid" value="0"/>#}
+{#                        <input type="hidden" name="ecmsfrom" value="/web/gj/12.html">#}
+                        </td>
+                    </div>
+                </form>
+            </ul>
+        </div>
+
+
+        <div class="whitebg gbook">
+            <h2 class="htitle">文章评论</h2>
+            <ul class="blog-comment" id="articleComments" page-count="1">
+                {% for comm in comms %}
+                    <li>
+                        <div class="comment-parent"><a name="comment-40"></a>
+                            <img src="http://thirdqq.qlogo.cn/g?b=oidb&amp;k=hZkNzdDx2gxV5a6Z0T4Usg&amp;s=100"
+                                 alt="{{ comm.nickname }}">
+                            <div class="info"><span class="username">{{ comm.nickname }}</span></div>
+                            <div class="comment-content">{{ comm.content }}</div>
+                            <p class="info info-footer"><span class="comment-time">{{ comm.create_time }}</span>
+                                <a href="javascript:;" class="btn-reply" onclick="saytext({{ article.id }}, {{ comm.id }})">回复</a></p></div>
+                        <div class="replycontainer" id="{{ comm.id }}">
+                        </div>
+                    </li>
+
+                {% endfor %}
+
+                    <li>
+                        <div class="comment-parent"><a name="comment-40"></a><img
+                                src="http://thirdqq.qlogo.cn/g?b=oidb&amp;k=hZkNzdDx2gxV5a6Z0T4Usg&amp;s=100"
+                                alt="王秀龙">
+                            <div class="info"><span class="username">王秀龙</span></div>
+                            <div class="comment-content">123</div>
+                            <p class="info info-footer"><span class="comment-time">2019-04-11 13:33:11</span><a
+                                    href="javascript:;" class="btn-reply"
+                                    data-target-openid="602363A9F27142FFBFBC123DA467AE94"
+                                    data-target-name="王秀龙">回复</a></p>
+                        </div>
+                        <div class="comment-child"><img
+                                src="http://thirdqq.qlogo.cn/g?b=oidb&amp;k=icP2lgG4UUJjhdzyTaQgBZQ&amp;s=100" alt="墨殇">
+                            <div class="info"><span class="username">墨殇</span>
+                                <span style="padding-right:0;margin-left:-5px;"> 回复 </span>
+                                <span class="username">王秀龙</span>
+                                <span>2133</span>
+                            </div>
+                            <p class="info"><span class="comment-time">2019-04-17 11:32:03</span>
+                                <a href="javascript:;" class="btn-reply"
+                                   data-target-openid="A209E578A49A07358C68AECD78D5AB3F"
+                                   data-target-name="墨殇">回复</a></p>
+                        </div>
+                        <div class="replycontainer" id="{{ comm.id }}">
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="comment-parent"><a name="comment-39"></a><img
+                                src="http://thirdqq.qlogo.cn/g?b=oidb&amp;k=JUHSwXGoSKR7oeNFGeXYdQ&amp;s=100"
+                                alt="Steven Von Fang">
+                            <div class="info"><span class="username">Steven Von Fang</span></div>
+                            <div class="comment-content">没有没有</div>
+                            <p class="info info-footer"><span class="comment-time">2019-03-27 17:51:51</span><a
+                                    href="javascript:;" class="btn-reply"
+                                    data-target-openid="4C76CE6EB7C2586E3E13A1F55AFE9855"
+                                    data-target-name="Steven Von Fang">回复</a></p></div>
+                        <div class="replycontainer layui-hide">
+                            <form class="layui-form" action=""><input type="hidden" name="openid" value=""><input
+                                    type="hidden" name="reply_openid" value=""><input type="hidden"
+                                                                                      name="article_id"
+                                                                                      value="8"><input type="hidden"
+                                                                                                       name="comment_id"
+                                                                                                       value="39">
+                                <div class="layui-form-item"><textarea name="content" lay-verify="replyContent"
+                                                                       placeholder="请输入回复内容" class="layui-textarea"
+                                                                       style="min-height:80px;"></textarea></div>
+                                <div class="layui-form-item">
+                                    <button class="layui-btn layui-btn-xs" lay-submit="formReply"
+                                            lay-filter="formReply">提交
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <div class="layui-flow-more">没有更多了哦！╮(╯▽╰)╭</div>
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/myjs.js" charset="utf-8"></script>
+{% endblock %}

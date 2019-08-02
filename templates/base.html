@@ -1,0 +1,311 @@
+{% load blog_tags %}
+{#加载我们自定义的模板标签文件#}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% block meta %}
+        <meta name="keywords" content="博客_首页"/>
+        <meta name="description" content="博客_首页"/>
+    {% endblock %}
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/libs/layui-v2.4.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/css/sitehome.css">
+    <link rel="stylesheet" href="/static/css/list.css">
+    <link rel="stylesheet" href="/static/css/m.css">
+    <link rel="stylesheet" type="text/css" href="/static/libs/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/libs/miss_nav/css/miss_nva.css"/>
+    {% block other %}
+    {% endblock %}
+
+</head>
+<body>
+<!--top begin-->
+<header class="layui-header header header-index" winter="">
+    <div class="layui-main indexmain">
+        <a class="logo" href="/">
+            <span class="fa fa-paper-plane-o zdylogo" title="长安的个人博客"></span>
+            <span class="logotext">长安的个人博客</span><span class="layui-badge-dot"></span>
+        </a>
+        <nav>
+            <ul class="layui-nav menuul" lay-filter="nav">
+                <li class="layui-nav-item {% block this_index %}{% endblock %}">
+                    <a href="/">博客主页</a>
+                </li>
+                <li class="layui-nav-item {% block this_article %}{% endblock %}">
+                    <a href="/category">零壹天地</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="/category/1" target="_blank">Python</a>
+                        </dd>
+                        <dd>
+                            <a href="/category/5" target="_blank">Linux</a>
+                        </dd>
+                        <dd>
+                            <a href="/category/8" target="_blank">数据库</a>
+                        </dd>
+                        <dd>
+                            <a href="/category/9" target="_blank">数据结构与算法</a>
+                        </dd>
+                        <dd>
+                            <a href="/category/4" target="_blank">计算机网络</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item {% block this_day %}{% endblock %}">
+                    <a href="/day">朝朝暮暮</a>
+                </li>
+                <li class="layui-nav-item {% block this_about %}{% endblock %}">
+                    <a href="/about">山水一程</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/music">宫商角徵</a>
+                </li>
+            </ul>
+            <div id='miss_nav'>
+                <div>
+                    <a href="/static/music">
+                        <i>宫与商</i>
+                    </a>
+                </div>
+                <div>
+                    <a href="/category">
+                        <i>零与壹</i>
+                    </a>
+                </div>
+                <div>
+                    <a href="/day">
+                        <i>朝与暮</i>
+                    </a>
+                </div>
+                <div>
+                    <a href="/about">
+                        <i>山水路</i>
+                    </a>
+                </div>
+                <div>
+                    <a href="/static/music">
+                        <i>宫与商</i>
+                    </a>
+                </div>
+                <div class='menu'>
+                    <div class='share' id='miss_toggle' data-rot='180' title="双击飞首页">
+                        <div class='fa fa-gear fa-spin zdymenu'></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="searchdiv">
+            <div class="searchico"></div>
+        </div>
+    </div>
+
+</header>
+<div class="searchbox">
+    <div class="search">
+        <form action="/seach" method="post" name="searchform" id="searchform">
+            {% csrf_token %}
+            <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);"
+                   onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}"
+                   onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
+            <input name="show" value="title" type="hidden">
+            <input name="tempid" value="1" type="hidden">
+            <input name="tbname" value="news" type="hidden">
+            <input name="Submit" class="input_submit" value="搜索" type="submit">
+        </form>
+    </div>
+    <div class="searchclose"></div>
+</div>
+<!--top end-->
+<article>
+    {% block about %}
+        {% block article %}
+
+
+        {% endblock %}
+
+        <div class="layui-col-xs0 layui-col-sm0 layui-col-md3 rbox">
+            <div class="mycard">
+                <h2>我的名片</h2>
+                <p>网名：Changan223 | 长安</p>
+                <p>职业：Pythond大法修炼者</p>
+                <p>现居：陕西省-西安市</p>
+                <p>Email：860393820@qq.com</p>
+                <ul class="linkmore">
+                    <li>
+                        <a class="fa fa-home"></a>
+                    </li>
+                    <li>
+                        <a class="fa fa-envelope-o"></a>
+                    </li>
+                    <li>
+                        <a class="fa fa-qq"></a>
+                    </li>
+                    <li id="weixin">
+                        <a class="fa fa-weixin" title="关注我的微信"></a>
+                        <i><img src="../static/images/wx.jpg" alt="图片"></i>
+                    </li>
+                </ul>
+            </div>
+            <!--mycard end-->
+            <!--notice-->
+            <div class="whitebg notice">
+                <h2 class="htitle">最近更新</h2>
+                <ul>
+                    {% for article in recent %}
+                        <li>
+                            <a href="{{ article.get_article_url }}" target="_blank">{{ article.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!--notice end-->
+
+            <!--whitebg-->
+            <div class="whitebg cloud">
+                <h2 class="htitle">博客归档</h2>
+                <ul>
+                    {% get_achives as archives %}
+                    {% for data in archives %}
+                        <a href="/archives/{{ data.year }}/{{ data.month }}"
+                           target="_blank">{{ data.year }}年{{ data.month }}月&emsp;</a>&emsp;&emsp;&emsp;&emsp;
+                    {% endfor %}
+                </ul>
+            </div>
+            <!--whitebg end-->
+
+            <!--paihang-->
+            <div class="whitebg paihang">
+                <h2 class="htitle">点击排行</h2>
+                <section class="topnews imgscale">
+                    <a href="">
+                        <img src="/static/images/b02.jpg" alt="图片">
+                        <span>文章点击排行</span>
+                    </a>
+                </section>
+                <ul>
+                    {% for article in rencent %}
+                        <li>
+                            <i></i>
+                            <a href="{{ article.get_article_url }}" target="_blank">{{ article.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!--paihang end-->
+            <!--tuijian-->
+            <div class="whitebg tuijian">
+                <h2 class="htitle">文章推荐</h2>
+                <section class="topnews imgscale">
+                    <a href=""><img src="/static/images/b02.jpg" alt="图片">
+                        <span>
+							推荐文章后期后台推送！！！
+						</span>
+                    </a>
+                </section>
+                <ul>
+                    <li>
+                        <a href="" title="也有些人，浓烈如酒，疯狂似醉，却是醒来无处觅，来去都如风，梦过无痕。" target="_blank">
+                            <i><img src="/static/images/b02.jpg" alt="图片"></i>
+                            <p>也有些人，浓烈如酒，疯狂似醉，却是醒来无处觅，来去都如风，梦过无痕。</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" title="无数的相遇，无数的别离，伤感良多，或许不舍，或许期待，或许无奈，" target="_blank">
+                            <i><img src="/static/images/b02.jpg" alt="图片"></i>
+                            <p>无数的相遇，无数的别离，伤感良多，或许不舍，或许期待，或许无奈，</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" title="回忆是座桥，却是通往寂寞的牢。《爱情睡醒了》" target="_blank">
+                            <i><img src="/static/images/b02.jpg" alt="图片"></i>
+                            <p>回忆是座桥，却是通往寂寞的牢。《爱情睡醒了》</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" title="人生就像一场旅行，不在乎目的地，在乎的就应是沿途的风景以及看风景的情绪。" target="_blank">
+                            <i><img src="/static/images/b02.jpg" alt="图片"></i>
+                            <p>人生就像一场旅行，不在乎目的地，在乎的就应是沿途的风景以及看风景的情绪。</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" title="有时候见到的,听到的,最后做出来的,结果却不是想要的!" target="_blank">
+                            <i><img src="/static/images/b02.jpg" alt="图片"></i>
+                            <p>有时候见到的,听到的,最后做出来的,结果却不是想要的!</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--tuijian end-->
+            <!--imgscale-->
+            <div class="ad whitebg imgscale">
+                <ul>
+                    <a href="" target=_blank><img src="/static/images/ad.jpg" alt="图片"></a>
+                </ul>
+            </div>
+
+            {#        <!--imgscale-->#}
+            {#        <div class="ad whitebg imgscale">#}
+            {#            <ul>#}
+            {#                <a href="" target=_blank><img src="../static/images/ad02.jpg" alt="图片"></a>#}
+            {#            </ul>#}
+            {#        </div>#}
+            <div class="whitebg tongji">
+                <h2 class="htitle">站点信息</h2>
+                <ul>
+                    <li><b>勉强运行</b>：xxxxxxxx天</li>
+                    <li><b>文章统计</b>：
+                        <a href="" target="_blank">（xx）</a>篇文章
+                    </li>
+                </ul>
+            </div>
+            <!--tongji end-->
+            <div class="links whitebg">
+                <h2 class="htitle">友情链接</h2>
+                <ul>
+                    <li>
+                        <a href="" target="_blank">虚位以待</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+</article>
+<footer>
+    <div class="layui-main layui-col-xs12 layui-col-sm12">
+        <ul class="site-idea">
+            <li>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>返璞归真</legend>
+                    <p>人生总是会有那么多的遗憾，就像那年你们手心贴着手心说好永不相忘。</p>
+                </fieldset>
+            </li>
+            <li>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>坚持故事</legend>
+                    <p>不论文笔，不论字数，不论逻辑，不论所有一切他人在乎的。
+                    </p>
+                </fieldset>
+            </li>
+            <li>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>星辰大海</legend>
+                    <p>待，秋风萧瑟时，散作满天星辰，你看那四季轮回海天 相接之际，正是 返璞归真 不灭的执念。</p>
+                </fieldset>
+            </li>
+        </ul>
+        <p class="footer-p">长安的个人博客 ©2019-2019
+            <a href="/" target="_blank" rel="external nofollow"> </a>
+        </p>
+    </div>
+</footer>
+
+<script src="/static/libs/layui-v2.4.5/layui.js" charset="utf-8"></script>
+<script src="/static/js/index.js" charset="utf-8"></script>
+{% block js %}
+{% endblock %}
+</body>
+</html>

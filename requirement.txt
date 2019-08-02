@@ -1,0 +1,4 @@
+Django==2.14
+Markdown==3.11
+PyMysql==0.93
+django-mdeditor==0.1.14

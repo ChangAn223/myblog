@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}博客首页 {% endblock %}
+
+{% block article %}
+
+    <div class="layui-col-xs12 layui-col-sm12 layui-col-md9">
+        <form action="#" method="POST">
+            {% csrf_token %}
+            {{ form.user.label }}:<br>
+            {{ form.user }}<br>
+{#            {% if form.user.0 %}#}
+{#                {{ form.user.0 }}#}
+{#            {% endif %}#}
+            {{ form.pwd.label }}:<br>
+            {{ form.pwd }}<br>
+{#            {% if form.pwd.0 %}#}
+{#                {{ form.pwd.0 }}#}
+{#            {% endif %}#}
+        <input type="submit" value="登陆"><br>
+        </form>
+    </div>
+{% endblock %}
